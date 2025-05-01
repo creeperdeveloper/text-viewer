@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>テキスト表示</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #f4f4f4;
+      margin: 0;
+    }
+
+    div {
+      background-color: #fff;
+      padding: 50px;
+      /* パディングを大きく */
+      border-radius: 10px;
+      /* 角丸を少し大きく */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      /* 影を少し強く */
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 3em;
+      /* テキストサイズを大きく */
+      margin-bottom: 30px;
+      /* 下の余白を大きく */
+    }
+
+    button {
+      padding: 15px 30px;
+      /* ボタンのパディングを大きく */
+      font-size: 1.5em;
+      /* ボタンの文字サイズを大きく */
+      border: none;
+      border-radius: 8px;
+      /* ボタンの角丸を少し大きく */
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin: 10px;
+      /* ボタンの余白を大きく */
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <h1 id="text"></h1>
+    <button onclick="start()">開始</button>
+    <button onclick="next()">次へ</button>
+  </div>
+
+  <script>
+    const sleep = (time) => new Promise((resolve) => setTimeout(resolve, time)); // timeはミリ秒
+
+    function $(id) {
+      return document.getElementById(id);
+    }
+    let main_text = " "
+    let currentIndex = 0;
+
+    function start() {
+      main_text = prompt("表示するテキストを入力してください。")
+      console.log("開始");
+      currentIndex = 0; // 開始時にインデックスをリセット
+      if (main_text.length > 0) {
+        $("text").textContent = main_text[currentIndex];
+      } else {
+        $("text").textContent = "表示するテキストがありません。";
+      }
+    }
+
+    async function next() {
+      console.log("次へ");
+      currentIndex++;
+      if (currentIndex < main_text.length) {
+        $("text").textContent = main_text[currentIndex];
+      } else {
+        $("text").textContent = "完了。";
+        await sleep(1000)
+        $("text").textContent = " ";
+      }
+    }
+  </script>
+</body>
+
+</html>
